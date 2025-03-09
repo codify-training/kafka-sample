@@ -1,0 +1,113 @@
+														Kafka
+________________________________________
+Introduction
+Kafka was designed and developed by LinkedIn developers to handle the increasing amount of real-time data within their platform. A team of developers built Kafka to manage high-throughput, real-time data streams with scalability, reliability, and low latency.
+Key Features:
+•	High Throughput Data: Kafka can process large sets of data quickly and efficiently.
+•	Scalability: As message volume increases, additional Kafka servers (brokers) can be added to scale the system.
+•	Reliability: Kafka ensures fault tolerance by keeping multiple copies of data to prevent data loss.
+•	Low Latency: Kafka achieves minimal delay between message production and consumption through parallel processing across servers and partitions.
+________________________________________
+Kafka Architecture
+Kafka follows a distributed architecture with the following key components:
+1. Producer
+•	Producers are the source of data in Kafka.
+•	These systems push messages to Kafka topics.
+2. Consumer
+•	Consumers retrieve data from Kafka topics for further processing.
+•	Example: In an analytics system, consumers process the data and prepare it for visualization.
+3. Broker (Kafka Server)
+•	Kafka broker is responsible for:
+o	Accepting messages and storing them.
+o	Serving messages to consumers.
+o	Tracking messages to ensure delivery.
+
+4. Cluster
+•	A Kafka cluster is a group of brokers working together.
+•	Adding more brokers allows Kafka to handle higher message loads and improves scalability.
+________________________________________
+5. Topics – Categorizing Messages
+Kafka categorizes messages into topics to allow efficient message filtering.
+Example: A ticket booking app with different booking categories:
+•	Flight booking
+•	Train booking
+•	Bus booking
+•	Cab booking
+•	Hotel booking
+Each category can have its own Kafka topic, enabling consumers to subscribe only to the relevant category.
+•	Example topics:
+o	flight-booking-topic
+o	train-booking-topic
+Consumers subscribe to topics to receive only the relevant messages.
+________________________________________
+6. Partitions – Parallel Processing of Messages
+•	Each Kafka topic is divided into one or more partitions.
+•	This allows Kafka to handle millions of messages by distributing storage and access across partitions.
+•	Messages are stored concurrently in different partitions.
+•	The number of partitions is defined during topic creation based on expected load.
+________________________________________
+
+7. Offset – Message Tracking in Partitions
+•	When a producer sends a message, it is stored in a partition within the topic.
+•	Each message inside a partition gets a unique sequential number called an offset.
+•	Offset helps in message tracking and ordering.
+•	Consumers read messages sequentially based on offsets.
+
+Consumer Group:
+  if we want receive millions of messages in consumer side, then single consumer cant handle it
+so we can achieve this using consumer scaling
+
+ZooKeeper:
+It keeps track of status of kafka cluster nodes, topics, partitions, offsets etc
+
+Installation of confluent:
+1. Install Docker for desktop
+2. Download this git project:https://github.com/confluentinc/cp-all-in-one/
+3. After download, unzip the cp-all-in-one
+4. open command prompt/terminal navigate to "D:\Tutions\projects\cp-all-in-one-7.9.0-post\cp-all-in-one>"
+5. Use dock command "docker-compose up -d"
+6. http://localhost:9021
+
+Access the broker container:
+docker exec -it broker bash
+
+Send messages to a topic:
+kafka-console-producer --broker-list broker:29092 --topic Flight-booking-topic
+
+
+How min.insync.replicas Works
+If a producer sends a message with acks=all, Kafka will ensure that at least min.insync.replicas acknowledge the write before confirming success.
+If the number of in-sync replicas falls below min.insync.replicas, Kafka rejects writes to prevent data loss.
+ EX:
+    replication.factor=3
+    min.insync.replicas=2
+    Kafka will require at least 2 in-sync replicas (including the leader) for a message to be acknowledged.
+
+AVRO Sample:
+
+{
+  "type": "record",
+  "namespace": "com.sample.booking",
+  "name": "booking",
+  "doc": "Flight sample Booking",
+  "fields": [
+    {
+      "name": "email",
+      "type": "string",
+      "doc": "The user email"
+    },
+    {
+      "name": "amount",
+      "type": "double",
+      "doc": "The price of boooking"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "The name of user"
+    }
+  ]
+}
+
+
+{"email":"ram.ryan@example.com","amount":210.75,"name":"ram Ryan"}
