@@ -75,6 +75,10 @@ Send messages to a topic:
 kafka-console-producer --broker-list broker:29092 --topic Flight-booking-topic
 
 
+Consume messages from the topic:
+kafka-console-consumer --bootstrap-server broker:29092 --topic Flight-booking-topic --from-beginning
+
+
 How min.insync.replicas Works
 If a producer sends a message with acks=all, Kafka will ensure that at least min.insync.replicas acknowledge the write before confirming success.
 If the number of in-sync replicas falls below min.insync.replicas, Kafka rejects writes to prevent data loss.
@@ -109,5 +113,18 @@ AVRO Sample:
   ]
 }
 
-
 {"email":"ram.ryan@example.com","amount":210.75,"name":"ram Ryan"}
+
+//Fill the commands - practice the commands
+
+Spring boot integration with Kafka:
+--------------------------------------
+1. Dependecies setup - add dependecies - done
+2. Create Producer - Done
+3. create consumer - Done
+4. create a controller that picks the message and hand over to producer
+5. application.yaml settings
+
+
+
+
