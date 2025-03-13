@@ -116,6 +116,34 @@ AVRO Sample:
 {"email":"ram.ryan@example.com","amount":210.75,"name":"ram Ryan"}
 
 //Fill the commands - practice the commands
+1. Consume Only New Messages (Default Behavior)
+This only consumes messages produced after the consumer starts.
+It does not read older messages.
+kafka-console-consumer --bootstrap-server broker:29092 --topic bus-booking - working
+
+
+2. Consume Messages from a Specific Offset
+If you want to start consuming messages from a particular offset, use:(from partition 0 reads messages from 5 to all)
+Reads messages from offset 5 in partition 0.
+Useful when debugging specific messages.
+kafka-console-consumer --bootstrap-server broker:29092 --topic bus-booking --offset 5 --partition 0
+
+
+3. Consume the Latest Message Only and exits
+Fetches only one message, which is the latest available.
+kafka-console-consumer --bootstrap-server broker:29092 --topic bus-booking --max-messages 1
+
+
+
+4. Consume Messages from the End of the Topic
+Skips all past messages and only reads new ones.
+kafka-console-consumer --bootstrap-server broker:29092 --topic bus-booking --offset latest
+
+
+5. Consume a Limited Number of Messages, consumes the latest 10 messages that get triggered freshly after running the command and exits after that
+kafka-console-consumer --bootstrap-server broker:29092 --topic bus-booking --max-messages 10
+
+
 
 Spring boot integration with Kafka:
 --------------------------------------
