@@ -153,6 +153,33 @@ Spring boot integration with Kafka:
 4. create a controller that picks the message and hand over to producer
 5. application.yaml settings
 
+---------------------------------
+1. Sending Json data to the topic using model from producer
+  - We fill the data into model object and we pass it to kafkaTemplate to post to the Topic in the broker.
+Implementation Steps:
+  1. Define Model Object. - Done
+  2. Add configuration to application yml. - Done
+  3. Construct Object and send the data to topic. - Done
+
+** During the execution the serailization config did not picked up. - check
+
+----------------------------------------------
+Exception Handling and retry mechanisms.
+1. Setup retry configuration.
+2. this retry configuration should be injected into kafka.
+3. Go and test out the retry mechanism.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
