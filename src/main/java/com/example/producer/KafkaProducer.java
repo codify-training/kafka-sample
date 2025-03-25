@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaProducer {
 
-    @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+
+    public KafkaProducer(KafkaTemplate<String, Object> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     public void sendMessage(final String message){
        /* final BusBooking busBooking = new BusBooking(message, "test", "21", System.currentTimeMillis());
@@ -23,8 +26,8 @@ public class KafkaProducer {
             throw new RuntimeException(e);
         }
         kafkaTemplate.send("bus-booking", 1, "myNewKey", data);*/
-
-        kafkaTemplate.send("bus-booking", 1, "myNewKey", message);
+        final BusBooking busBooking = new BusBooking(message, "test", "21", System.currentTimeMillis());
+        kafkaTemplate.send("bus-booking", 1, "myNewKey", busBooking);
     }
 
 }
